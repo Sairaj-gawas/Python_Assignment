@@ -8,10 +8,10 @@ from selenium.webdriver.common.by import By
 @pytest.fixture
 def driver():
     # Set up the Chrome WebDriver
-    driver = webdriver.Chrome()
-    driver.maximize_window()                         # Maximizing the browser
-    driver.get("https://www.amazon.in/minitv")       # Launching the url
-    driver.implicitly_wait(10)                       # Implicit wait for 10 seconds
+    driver = webdriver.Chrome()  # I kept my chrome.exe file in script folder so that we don't need to write the path
+    driver.maximize_window()     # Maximizing the browser
+    driver.get("https://www.amazon.in/minitv")  # Launching the url
+    driver.implicitly_wait(10)  # Implicit wait for 10 seconds
     yield driver
 
 
@@ -31,17 +31,16 @@ def test_select_series(driver):
 
 def test_play_season_one_first_episode(driver):
     # Task 3: Playing the First Episode of Season 1
+
     series_link = driver.find_element(By.XPATH, "//img[@alt='Yeh Meri Family - Season 2 - Watch Free']")
     series_link.click()
 
-    seasons = driver.find_element(By.XPATH, "//div[@id='m-tabs-0-1']//h2[contains(@class,'Heading_h2__DveuA "
-                                            "SeasonsTab_tabHeading__mGwNN')][contains(text(),'Season')]")
-    seasons.click()
+    seasons_one = driver.find_element(By.XPATH, "//div[@id='m-tabs-0-1']//h2[contains(@class,'Heading_h2__DveuA "
+                                                "SeasonsTab_tabHeading__mGwNN')][contains(text(),'Season')]")
+    seasons_one.click()
     time.sleep(5)
 
-    first_episode = driver.find_element(By.XPATH, "//body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div["
-                                                  "1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/a[1]/div[1]/span["
-                                                  "1]/span[1]/img[1]")
+    first_episode = driver.find_element(By.XPATH, "(//img)[37]")
     first_episode.click()
     time.sleep(10)  # Adding a delay of 10 seconds to check the video is playing
 
@@ -52,6 +51,7 @@ def test_play_season_one_first_episode(driver):
 
 def test_play_season_two_first_episode(driver):
     #  Playing the First Episode of Season 2
+    
     series_link = driver.find_element(By.XPATH, "//img[@alt='Yeh Meri Family - Season 2 - Watch Free']")
     series_link.click()
 
@@ -64,7 +64,7 @@ def test_play_season_two_first_episode(driver):
                                                   "@class='ThumbnailCard_playIconContainer__IkFPt']//img")
     first_episode.click()
 
-    time.sleep(10)    # Adding a delay of 10 seconds to check the video is playing
+    time.sleep(10)  # Adding a delay of 10 seconds to check the video is playing
 
     # Verify video playback
     video_element = driver.find_element(By.XPATH, "//video")
